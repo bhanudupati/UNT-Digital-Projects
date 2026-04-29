@@ -15,8 +15,11 @@ df["Partner - Code"]  = df["Partner - Code"].fillna("No Partner")
 df["Collection Code"] = df["Collection Code"].fillna("Unknown")
 df["Model"]           = df["Model"].fillna("Unknown")
 df["Due Reminder"]    = df["Due Reminder"].fillna("None")
-df["Grant?"]          = df["Grant?"].fillna(False)
 df["Archived"]        = df["Archived"].fillna(False)
+# Standardize Grant? to Yes/No
+df["Grant?"] = df["Grant?"].apply(
+    lambda x: "Yes" if str(x).strip() in ["True", "TRUE", "Yes", "1"] else "No"
+)
 df["Final Items"]        = pd.to_numeric(df["Final Items"], errors="coerce").fillna(0)
 df["Estimated Contents"] = pd.to_numeric(df["Estimated Contents"], errors="coerce").fillna(0)
 df["Checklist Item Total Count"]     = pd.to_numeric(df["Checklist Item Total Count"], errors="coerce").fillna(0)
